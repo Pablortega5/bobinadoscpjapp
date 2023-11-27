@@ -1,0 +1,94 @@
+{% extends "base.html" %} {% load static %} {% block body %}
+{% block js %}
+
+<script>
+  function eliminarCliente(id){
+    Swal.fire({
+      "title":"¿Estas seguro?",
+      "text":"esta acción no se puede deshacer",
+      "icon":"question",
+      "showCancelButton": true,
+      "cancelButtonText":"No, Cancelar",
+      "confirmButtonText": "Si, Eliminar",
+      "reverseButtons": true,
+      "confirmButtonColor": "#dc3545"
+    })
+    .then(function(result){
+      if(result.isConfirmed){
+        window.location.href = "/eliminar_cliente/"+id+"/"
+      }
+    })
+
+  }
+</script>
+
+{% endblock %}
+
+
+
+
+<!-- page content -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-8">
+        <h1>LISTA CLIENTES</h1>
+
+      </div>
+
+      <!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+
+        </ol>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</div>
+
+<!-- /.content-header -->
+<section class="content">
+  <div class="container-fluid">
+ 
+    {% load humanize %}
+    <div class="table-responsive">
+      <table class="table table-striped border-secondary">
+        <thead>
+
+          <tr>
+            <th scope="col">N°</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Rut</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Correo</th>
+        
+          </tr>
+        </thead>
+        <tbody>
+          {% for c in entity %}
+          <tr>
+            <th scope="row">{{c.id}}</th>
+            <td>{{c.nombre}}</td>
+            <td>{{c.rut}}</td>
+            <td>{{c.direccion}}</td>
+            <td>{{c.telefono}}</td>
+            <td>{{c.correo}}</td>
+            <td><a href="{% url 'editar_cliente' c.id %}" class = "btn btn-info btn-sm">Editar</a>
+              <a href="#" onclick="eliminarCliente({{c.id}})" class = "btn btn-danger btn-sm">Eliminar</a></td></td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      {% include 'paginator.html' %}
+    </div>
+  </div>
+ </div> 
+</section>
+{% endblock %}

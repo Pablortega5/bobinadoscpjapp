@@ -1,0 +1,4 @@
+django
+django-chartjs
+xhtml2pdf
+transbank-sdk==4.0.0

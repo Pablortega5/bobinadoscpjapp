@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>BOBINADOS CPJ</title>
+
+    <link rel="icon" type="image/x-icon" href="{% static 'dist/img/Logo.png' %}" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    <link href="{% static 'home/css/styles.css' %}" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top"><img src="{% static 'dist/img/Logo.png' %}" alt="..."
+                    style="height: 5rem;" /></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars ms-1"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#services">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portfolio">Estado Servicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">Sobre nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#team">Testimonios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Nuevo testimonio</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="masthead">
+        <div class="container">
+            <div class="masthead-subheading">Bienvenidos a </div>
+            <div class="masthead-heading text-uppercase">BOBINADOS CPJ!</div>
+
+        </div>
+    </header>
+
+    <section class="page-section" id="services">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Servicios</h2>
+                <h3 class="section-subheading text-muted">
+                    <hr>
+                </h3>
+            </div>
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fas fa-tools fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="my-3">Reparaciones</h4>
+                    <p class="text-muted"> Nuestro equipo de expertos altamente capacitados se especializa en devolver
+                        la funcionalidad a motores eléctricos, transformadores y otros dispositivos, asegurando un
+                        servicio de calidad y eficiente.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fas fa-wrench fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="my-3">Mantenimiento</h4>
+                    <p class="text-muted"> Nuestro equipo altamente calificado está listo para proporcionar un
+                        mantenimiento preventivo y correctivo, utilizando las mejores prácticas y herramientas
+                        especializadas.</p>
+                </div>
+                <div class="col-md-4">
+                    <span class="fa-stack fa-4x">
+                        <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                        <i class="fas fa-handshake fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <h4 class="my-3">Garantia</h4>
+                    <p class="text-muted">Servicio garantizado al 100%, respaldado por nuestra garantía de 1 mes. Tu
+                        tranquilidad es nuestra prioridad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-section bg-light" id="portfolio">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Estado de Servicio</h2>
+                <h3 class="section-subheading text-muted">Ingrese el numero de la guía para revisar el estado de su
+                    servicio</h3>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <label for="id" class="label">Buscar por Numero de guía:</label>
+                <input type="text" name="id" id="id" class="form-control">
+                <br>
+                <button href="#portfolio" type="submit" class="btn-primary">Buscar</button>
+                <hr>
+            </form>
+            {% load humanize %}
+            {% if guia_resultado %}
+            <p>Resultado:</p>
+            <table class="table table-striped border-secondary">
+                <thead>
+
+                    <tr>
+                        <th scope="col">N° Guia</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Sucursal</th>
+                        <th scope="col">Saldo</th>
+                        <th scope="col">Fecha registro</th>
+                        <th scope="col">Pago</th>
+                        <th scope="col">Estado</th>
+                        {% if guia_resultado.estado_pago != 'completado' %}
+                        <th scope="col">Opciones</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <th scope="row">{{guia_resultado.id}}</th>
+                        <td>{{guia_resultado.nombre}}</td>
+                        <td>{{guia_resultado.sucursal}}</td>
+                        <td>$ {{guia_resultado.saldo | intcomma}}</td>
+                        <td>{{guia_resultado.f_registro }}</td>
+                        <td>{{guia_resultado.estado_pago}}</td>
+                        <td>{{guia_resultado.estado}}</td>
+                        {% if guia_resultado.estado_pago != 'completado' %}
+                        <td>
+                            
+                                <a href="{% url 'realizar_pago' guia_id=guia_resultado.id %}" class="btn btn-success btn-sm">Pagar</a>
+                            
+                        </td>
+                        {% endif %}
+
+                    </tr>
+
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="page-section" id="about">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Sobre nosotros</h2>
+                <h3 class="section-subheading text-muted">Nuestra historia</h3>
+            </div>
+            <ul class="timeline">
+                <li>
+                    <div class="timeline-image"><img class="rounded-circle img-fluid"
+                            src="{% static 'home/assets/img/about/1.jpeg' %}" alt="..." /></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>2000-2010</h4>
+                            <h4 class="subheading">Nuestros inicios</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p class="text-muted">Bobinados CPJ se estableció en el año 2000 y superó desafíos
+                                significativos hasta 2010. A pesar de los obstáculos iniciales, nuestra dedicación y
+                                calidad de servicio nos han llevado a prosperar en el sector de bobinados</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="timeline-inverted">
+                    <div class="timeline-image"><img class="rounded-circle img-fluid"
+                            src="{% static 'home/assets/img/about/2.png' %}" alt="..." /></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>2010-2020</h4>
+                            <h4 class="subheading">Crecimiento</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p class="text-muted">Desde el 2010 hasta el 2020, Bobinados CPJ experimentó una notable
+                                mejora en todos los aspectos. Aprovechando la experiencia acumulada, perfeccionamos
+                                nuestros servicios y consolidamos nuestra posición en el mercado. Este periodo marcó un
+                                crecimiento significativo y un compromiso continuo con la excelencia.</p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="timeline-image"><img class="rounded-circle img-fluid"
+                            src="{% static 'home/assets/img/about/tres.jpg' %}" alt="..." /></div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4>2023</h4>
+                            <h4 class="subheading">Expansión</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p class="text-muted">Gracias al éxito continuo de nuestro negocio, hemos iniciado la
+                                gestión para la apertura de nuevas sucursales. Este paso estratégico refleja nuestro
+                                compromiso con el crecimiento y la expansión, permitiéndonos brindar nuestros servicios
+                                de calidad a un público aún más amplio.</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="timeline-inverted">
+                    <div class="timeline-image">
+                        <h4>
+                            ESTE
+                            <br />
+                            ES
+                            <br />
+                            EL INICIO!
+                        </h4>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="page-section bg-light" id="team">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Testimonios</h2>
+                <h3 class="section-subheading text-muted">Comentarios de clientes</h3>
+            </div>
+            <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    {% for comentario in comentarios %}
+                    <div class="carousel-item active">
+                        <div class="card mb-3">
+
+                            <div class="text-center mt-3">
+                                <div>
+                                    <i class="fas fa-user fa-3x"></i>
+                                </div>
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">{{ comentario.autor }}</h5>
+                                <p class="card-text">{{ comentario.contenido }}</p>
+                                <p class="card-text"><small class="text-muted">Calificación: {{ comentario.calificacion}} - {{ comentario.fecha }}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="page-section" id="contact">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">Testimonio</h2>
+                <h3 class="section-subheading text-muted">Cuentanos tu experiencia.</h3>
+            </div>
+            <form id="miFormulario" action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="id_cliente" class="col-8 col-form-label" style="color: aliceblue;">Autor:</label>
+                    <div class="col-12">
+
+                        {{ form.autor }}
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="text" class="col-8 col-form-label" style="color: aliceblue;">Contenido:</label>
+                    <div class="col-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+
+                            </div>
+                            {{form.contenido}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-8 col-form-label" style="color: aliceblue;"
+                        for="{{ form.calificacion.id_for_label }}">Calificación</label>
+                    <div class="col-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+
+                            </div>
+                            {{ form.calificacion }}
+                        </div>
+                    </div>
+                </div>
+
+
+                <form method="post" action="{% url 'home' %}">
+                    {% csrf_token %}
+                    {{ formulario_comentario.as_p }}
+                    <br>
+                    <button type="submit" class="btn-primary">Agregar Comentario</button>
+                </form>
+        </div>
+    </section>
+
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-4 text-lg-start">BOBINADOS CPJ Website 2023</div>
+                <div class="col-lg-4 my-3 my-lg-0">
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i
+                            class="fab fa-linkedin-in"></i></a>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a class="link-dark text-decoration-none me-3" href="{% url 'index' %}">Login Empresa</a>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'home/js/scripts.js' %}"></script>
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {% if messages %}
+    {% for m in messages %}
+    <script>
+        Swal.fire({
+            "title": "Felicitaciones",
+            "text": "{{m}}",
+            "icon": "success"
+        })
+    </script>
+    {% endfor %}
+
+    {% endif %}
+</body>
+
+
+</html>

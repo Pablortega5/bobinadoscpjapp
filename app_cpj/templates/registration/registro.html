@@ -1,0 +1,129 @@
+{% extends "base.html" %} {% load static %} {% block body %}
+    <br /><br /><br /><br />
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+          <div class="container">
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Registro de Usuario</h3>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title"></h3>
+                <form action="" method="POST">
+                  {% csrf_token %}
+                  {{ form.non_field_errors }}
+
+                  <label for="id_username">Nombre de usuario:</label>
+                  {{ form.username.errors }}
+                  <input
+                    type="text"
+                    name="username"
+                    maxlength="150"
+                    autocapitalize="none"
+                    autocomplete="username"
+                    autofocus=""
+                    required=""
+                    id="id_username"
+                    class="form-control"
+                  />
+
+                  <br />
+                  <span class="helptext"
+                    >Requerido. 150 caracteres como máximo. Únicamente letras,
+                    dígitos y @/./+/-/_
+                  </span>
+                  <br /><br />
+                  <label for="id_first_name">Nombre:</label>
+                  {{ form.first_name.errors }}
+                  <input
+                    type="text"
+                    name="first_name"
+                    maxlength="150"
+                    id="id_first_name"
+                    class="form-control"
+                  />
+                  <br />
+                  <label for="id_last_name">Apellidos:</label>
+                  {{ form.last_name.errors }}
+                  <input
+                    type="text"
+                    name="last_name"
+                    maxlength="150"
+                    id="id_last_name"
+                    class="form-control"
+                  />
+                  <br />
+                  <label for="id_email">Dirección de correo electrónico:</label>
+                  {{ form.email.errors }}
+                  <input
+                    type="email"
+                    name="email"
+                    maxlength="254"
+                    id="id_email"
+                    class="form-control"
+                  />
+                  <br />
+                  <label for="id_password1">Contraseña:</label>
+                  {{ form.password1.errors }}
+                  <input
+                    type="password"
+                    name="password1"
+                    autocomplete="new-password"
+                    required=""
+                    id="id_password1"
+                    class="form-control"
+                  />
+
+                  <br />
+                  <span class="helptext">
+                    <ul>
+                      <li>
+                        Su contraseña no puede asemejarse tanto a su otra
+                        información personal.
+                      </li>
+                      <li>
+                        Su contraseña debe contener al menos 8 caracteres.
+                      </li>
+                      <li>
+                        Su contraseña no puede ser una clave utilizada
+                        comúnmente.
+                      </li>
+                      <li>
+                        Su contraseña no puede ser completamente numérica.
+                      </li>
+                    </ul>
+                  </span>
+
+                  <label for="id_password2">Contraseña (confirmación):</label>
+                  {{ form.password2.errors }}
+                  <input
+                    type="password"
+                    name="password2"
+                    autocomplete="new-password"
+                    required=""
+                    id="id_password2"
+                    class="form-control"
+                  />
+
+                  <br />
+                  <span class="helptext"
+                    >Para verificar, introduzca la misma contraseña
+                    anterior.</span
+                  >
+
+                  <br /><br />
+                  
+                  <input
+                    type="submit"
+                    value="Registrar"
+                    class="btn btn-success float-right"
+                  />
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

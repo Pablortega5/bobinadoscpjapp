@@ -1,0 +1,207 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bobinados CPJ</title>
+  <link rel="icon" type="image/x-icon" href="{% static 'dist/img/Logo.png' %}" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dist/css/base.min.css' %}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+
+
+    <div class="preloader flex-column justify-content-center align-items-center">
+      <img class="animation__shake" src="{% static 'dist/img/Logo.png' %}"  height="150" width="150">
+    </div>
+
+
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+
+      </ul>
+
+
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt fa-lg" style="color: #e5d41f;"></i></a></li>
+        {%else%}
+
+        {% endif %}
+      </ul>
+    </nav>
+
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+
+      <a href="/" class="brand-link">
+        <img src="{% static 'dist/img/Logo.png' %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+          style="opacity: .9">
+        <span class="brand-text font-weight-light">Bobinados CPJ</span>
+      </a>
+
+
+      <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
+          <div class="info">
+            <a href="#" class="d-block">@ {{ user.username | capfirst}}</a>
+          </div>
+        </div>
+
+
+
+    
+        <nav class="mt-2">
+
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <a href="{% url 'home' %}" class="nav-link">
+              <i class="fas fa-home"></i>
+              <p>
+                &nbsp; HOME
+              </p>
+            </a>
+
+
+            <a href="{% url 'index' %}" class="nav-link">
+              <i class="fas fa-chart-bar"></i>
+              <p>
+                &nbsp; Dashboard
+                <hr style="background-color: white; height: 2px; border: none;">
+
+              </p>
+            </a>
+
+
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Guias
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'listar_guias' %}" class="nav-link">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'crear_guia' %}" class="nav-link">
+                    <i class="fa fa-plus-circle nav-icon"></i>
+                    <p>Crear</p>
+                  </a>
+                </li>
+
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fa fa-users"></i>
+                <p>
+                  Clientes
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'listar_clientes' %}" class="nav-link">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p>Listar</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'registrar_cliente' %}" class="nav-link">
+                    <i class="fa fa-plus-circle nav-icon"></i>
+                    <p>Registrar</p>
+                  </a>
+                </li>
+
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="far fa-address-card"></i>
+                <p>
+                  Usuarios
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="{% url 'usuarios' %}" class="nav-link">
+                    <i class="fas fa-list nav-icon"></i>
+                    <p>Lista</p>
+                  </a>
+
+                </li>
+
+                <li class="nav-item">
+                  <a href="{% url 'registrar_usuario' %}" class="nav-link">
+                    <i class="fa fa-plus-circle nav-icon"></i>
+                    <p>Registrar</p>
+                  </a>
+                </li>
+              </ul>
+
+
+             
+      </div>
+
+    </aside>
+
+    
+    <div class="content-wrapper">
+
+
+      {% block body %}
+      {% endblock %}
+
+
+    </div>
+
+
+
+    <aside class="control-sidebar control-sidebar-dark">
+
+    </aside>
+
+  </div>
+
+
+
+  <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+
+  <script src="{% static 'dist/js/base.js' %}"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  {% if messages %}
+  {% for m in messages %}
+  <script>
+    Swal.fire({
+      "title": "Felicitaciones",
+      "text": "{{m}}",
+      "icon": "success"
+    })
+  </script>
+  {% endfor %}
+
+  {% endif %}
+</body>
+
+</html>

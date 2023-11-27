@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>
+    {% load humanize %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        p {
+            margin: 5px 0;
+            text-align: left;
+        }
+
+        .invoice-details p {
+            text-transform: uppercase;
+        }
+
+        .invoice-details {
+            margin-top: 20px;
+        }
+
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .invoice-table th,
+        .invoice-table td {
+            border: 1px solid #e2e2e2;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .barcode-image {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+
+            /* Ajusta el margen izquierdo según sea necesario */
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div class="container ">
+
+        <table>
+            <tr>
+                <th><img src="https://cdn.discordapp.com/attachments/575522010566885392/1160984592661098577/Logo.png"
+                        alt="Logo" width="100" /></th>
+                <th>
+                    <p>Bobinados CPJ</p>
+                    <p>MATUCANA 100 </p>
+                    <p>77.852.852-k</p>
+                    <p> +56995952156 </p>
+                    </p>
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
+            </tr>
+        </table>
+        <br><br><br><br><br>
+        <div class="row ">
+            <div class="col-md-6">
+                <div class="invoice-details">
+                    <h2>FACTURA</h2>
+                    <p>FECHA: {{ guia.f_registro|date:"d/m/Y" }}</p>
+                    <p>CLIENTE: {{ guia.nombre|upper }}</p>
+                    <p>DIRECCION: {{ guia.direccion|upper }}</p>
+                    <p>CORREO: {{ guia.correo|upper }}</p>
+                    <p>TELEFONO: {{ guia.telefono }}</p>
+                </div>
+            </div>
+        </div>
+
+        <table class="invoice-table">
+            <tr>
+                <th>Descripción del presupuesto</th>
+                <th>Valor del presupuesto</th>
+                <th>Abono</th>
+                <th>Saldo</th>
+
+            </tr>
+            <tr>
+                <td>{{ guia.presupuesto }}</td>
+                <td>${{ guia.valor_presupuesto | intcomma }}</td>
+                <td>${{ guia.abono | intcomma }}</td>
+                <td>${{ guia.saldo | intcomma }}</td>
+
+            </tr>
+        </table>
+
+        <br>
+
+       <h1 style=" margin-left: 550px;">Total: ${{ guia.valor_presupuesto | intcomma }} </h1>
+       <h1 style=" margin-left: 550px;"> Total + IVA: ${{ guia.total | intcomma }} </h1>
+        <br><br><br><br><br><br><br><br><br><br><br>
+        <div class="container">
+            <img class="barcode-image"
+                src="https://cdn.discordapp.com/attachments/575522010566885392/1172019906724765716/Captura20de20Pantalla202020-06-2520a20las2019.png?ex=655ecb98&is=654c5698&hm=79116c0a3c321b07a1ad07e74e092575f9a4f930ab12c35dd283c508d434701d&"
+                alt="Código de barras">
+        </div>
+    </div>
+</body>
+
+</html>

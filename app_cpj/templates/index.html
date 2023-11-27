@@ -1,0 +1,242 @@
+{% extends "base.html" %} {% load static %} {% block body %}
+{% load humanize %}
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Dashboard</h1>
+      </div>
+      <!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+
+        </ol>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<section class="content">
+  <div class="container-fluid">
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-4 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>$ {{ suma_total | intcomma }}</h3>
+                <p>Total : {{ nombre_mes |title}}</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <br></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-4 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>$ {{ suma_totales_dia | intcomma }}</h3>
+                <p>Total hoy: {{ nombre_dia |title }}</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <br></a>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>$ {{ suma_iva| floatformat:0 |intcomma }}</h3>
+                <p>Total de IVA en {{ nombre_mes|title }} </p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer"> <br></a>
+            </div>
+          </div>
+
+
+          <div class="col-lg-4 col-6">
+            <canvas id="bar-chart"></canvas>
+          </div>
+          <script>
+            var ctx = document.getElementById('bar-chart').getContext('2d');
+            var labels = {{ labels| safe }};
+            var data = {{ data| safe }};
+
+            var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: 'Totales por Sucursal',
+                  data: data,
+                  backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          </script>
+          <div class="col-lg-4 col-6">
+            <canvas id="myChart" width="400" height="200"></canvas>
+          </div>
+          <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+
+            var data = {{ totales| safe }};
+            var labels = {{ sucursales| safe }};
+
+            var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: 'Totales por Sucursal (Hoy)',
+                  data: data,
+                  backgroundColor: 'rgba(0, 128, 0, 0.5)',
+                  borderColor: 'rgba(54, 162, 235, 1)',
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          </script>
+          <!-- Agrega el segundo gráfico para la suma de IVA por sucursal -->
+          <div class="col-lg-4 col-6">
+            <canvas id="iva-chart" width="400" height="200"></canvas>
+          </div>
+
+          <script>
+            var ctx = document.getElementById('iva-chart').getContext('2d');
+            var labels = {{ iva_labels| safe }};
+            var data = {{ iva_data| safe }};
+
+            var ivaChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: 'Suma de IVA por Sucursal (Mes Actual)',
+                  data: data,
+                  backgroundColor: 'rgba(128, 0, 128, 0.5)',  // Color morado como ejemplo
+                  borderColor: 'rgba(128, 0, 128, 1)',  // Puedes ajustar el color del borde si lo deseas
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          </script>
+        </div>
+        <hr>
+        <!-- Incluir Moment.js (puedes descargarlo o usar un CDN) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+        <h1>Gráfico de Totales Mensuales del Año Actual</h1>
+
+        <!-- Canvas donde se dibujará el gráfico -->
+        <canvas id="myNewChart" width="400" height="200"></canvas>
+
+        <script>
+          // Parsea el JSON de totales_mensuales
+          var totalesMensuales = {{ totales_mensuales| safe }};
+
+          // Crear un array de nombres de meses en español
+          var nombresMeses = Array.from({ length: 12 }, (_, i) => new Date(2023, i, 1).toLocaleDateString(undefined, { month: 'long' }));
+
+          // Mapea los datos necesarios desde totalesMensuales
+          var meses = totalesMensuales.map(function (item) { return item.mes; });
+          var totales = totalesMensuales.map(function (item) { return item.total_mensual; });
+
+          // Rellenar con ceros los meses sin datos
+          for (var i = 1; i <= 12; i++) {
+            if (!meses.includes(i)) {
+              meses.push(i);
+              totales.push(0);
+            }
+          }
+
+          // Ordenar los datos por mes
+          var datosOrdenados = [];
+          for (var i = 0; i < meses.length; i++) {
+            var index = meses.indexOf(i + 1);
+            datosOrdenados.push(totales[index]);
+          }
+
+          // Configuración del nuevo gráfico con un ID diferente
+          var ctxNewChart = document.getElementById('myNewChart').getContext('2d');
+          var myNewChart = new Chart(ctxNewChart, {
+            type: 'line',
+            data: {
+              labels: nombresMeses,
+              datasets: [{
+                label: 'Suma de Totales',
+                data: datosOrdenados,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                fill: false
+              }]
+            },
+            options: {
+              scales: {
+                xAxes: [{
+                  type: 'category',  // Utiliza 'category' para mostrar los nombres de los meses
+                  labels: nombresMeses,
+                  position: 'bottom'
+                }],
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true
+                  }
+                }]
+              }
+            }
+          });
+        </script>
+
+
+
+      </div>
+  </div>
+
+<br><br>
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends "base.html" %} {% load static %} {% block body %}
+{% block js %}
+
+<script>
+  function eliminarGuia(id){
+    Swal.fire({
+      "title":"¿Estas seguro?",
+      "text":"esta acción no se puede deshacer",
+      "icon":"question",
+      "showCancelButton": true,
+      "cancelButtonText":"No, Cancelar",
+      "confirmButtonText": "Si, Eliminar",
+      "reverseButtons": true,
+      "confirmButtonColor": "#dc3545"
+    })
+    .then(function(result){
+      if(result.isConfirmed){
+        window.location.href = "/eliminar/"+id+"/"
+      }
+    })
+
+  }
+</script>
+<script>
+  // Script para realizar la búsqueda en tiempo real
+  const searchInput = document.getElementById('search-input');
+  const searchForm = document.getElementById('search-form');
+
+  searchInput.addEventListener('input', function () {
+    // Enviar el formulario cada vez que se ingrese un carácter
+    searchForm.submit();
+  });
+
+  // Establecer un valor predeterminado si el campo está vacío
+  searchInput.addEventListener('focus', function () {
+    if (searchInput.value === '') {
+      searchInput.placeholder = 'Buscar por ID';
+    }
+  });
+
+  // Limpiar el marcador de posición cuando se comienza a escribir
+  searchInput.addEventListener('input', function () {
+    searchInput.placeholder = '';
+  });
+</script>
+
+{% endblock %}
+
+
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-8">
+        <h1>LISTA GUIAS</h1>
+        <form method="get" action="{% url 'listar_guias' %}">
+          <input type="text" name="q" placeholder="Buscar N° de guía" >
+          <button type="submit">Buscar</button>
+      </form>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+        </ol>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<section class="content">
+  <div class="container-fluid">
+ 
+    {% load humanize %}
+    <div class="table-responsive">
+      <table class="table table-striped border-secondary">
+        <thead>
+
+          <tr>
+            <th scope="col">N° Guia</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Direccion</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Sucursal</th>
+            <th scope="col">Total</th>
+            <th scope="col">Abono</th>
+            <th scope="col">Saldo</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Pago</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for g in entity %}
+          <tr>
+            <th scope="row">{{g.id}}</th>
+            <td>{{g.nombre}}</td>
+            <td>{{g.direccion}}</td>
+            <td>{{g.correo}}</td>
+            <td>{{g.telefono}}</td>
+            <td>{{g.sucursal}}</td>
+            <td>$ {{g.total | intcomma}}</td>
+            <td>$ {{g.abono | intcomma}}</td>
+            <td>$ {{g.saldo | intcomma}}</td>
+            <td>{{g.f_registro }}</td>
+            <td>{{g.estado_pago}}</td>
+            <td>{{g.estado}}</td>
+            <td><a href="{% url 'actualizar' g.id %}" class = "btn btn-info btn-sm">Editar</a>
+            <a href="#" onclick="eliminarGuia({{g.id}})" class = "btn btn-danger btn-sm">Eliminar</a>
+            <a href="{% url 'crear_guia_y_enviar_factura' id=g.id %}" class="btn btn-success btn-sm">Enviar Factura</a>
+            <a href="{% url 'generar_factura_pdf' guia_id=g.id %}" class="btn btn-success btn-sm"><i class="fa fa-download" aria-hidden="true"></i></a>
+            
+            </td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      {% include 'paginator.html' %}
+    </div>
+  </div>
+ </div> 
+</section>
+{% endblock %}

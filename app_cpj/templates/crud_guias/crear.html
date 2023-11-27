@@ -1,0 +1,301 @@
+{% extends "base.html" %} {% load static %} {% block body %}
+
+<!-- page content -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-8">
+        <h1>Crear Guia</h1>
+
+      </div>
+
+      <!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+
+        </ol>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</div>
+<hr />
+<!-- /.content-header -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="container">
+        <div class="card card-secondary">
+          <div class="card-header">
+            <h3 class="card-title">CREAR GUIA</h3>
+          </div>
+          <div class="card-body">
+            <form id="miFormulario" action="" method="POST">
+              {% csrf_token %}
+              <div class="form-group row">
+                <label for="id_cliente" class="col-8 col-form-label">Cliente</label>
+                <div class="col-12">
+
+                  {{ form.cliente }}
+                </div>
+              </div>
+
+              <a href="{% url 'registrar_cliente' %}">
+                <p>Nuevo cliente</p>
+              </a>
+
+              <div class="form-group row">
+                <label for="text" class="col-8 col-form-label">Nombre</label>
+                <div class="col-12">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fa fa-user"></i>
+                      </div>
+                    </div>
+                    {{form.nombre}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-8 col-form-label" for="direccion">Direccion</label>
+                <div class="col-12">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fa fa-map-marker"></i>
+                      </div>
+                    </div>
+                    {{form.direccion}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="correo" class="col-8 col-form-label">Correo</label>
+                <div class="col-12">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fa fa-envelope"></i>
+                      </div>
+                    </div>
+                    {{form.correo}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="telefono" class="col-8 col-form-label">Telefono</label>
+                <div class="col-12">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fa fa-phone"></i>
+                      </div>
+                    </div>
+                    {{form.telefono}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-8 col-form-label" for="sucursal">Sucursal</label>
+                <div class="col-12">{{form.sucursal}}</div>
+              </div>
+              <div class="form-group row" id="presupuesto-container">
+                <label for="presupuesto" class="col-8 col-form-label">Detalle Presupuesto</label>
+                <div class="col-12">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                    </div>
+                    {{form.presupuesto}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row" id="presupuesto-container">
+                <label for="presupuesto" class="col-8 col-form-label">Total Presupuesto</label>
+                <div class="col-12">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-dollar-sign"></i>
+                      </div>
+                    </div>
+                    {{form.valor_presupuesto}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="total" class="col-8 col-form-label">Total + IVA</label>
+                <div class="col-12">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-dollar-sign"></i>
+                      </div>
+                    </div>
+                    {{form.total}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label for="abono" class="col-8 col-form-label">Abono</label>
+                <div class="col-12">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-dollar-sign"></i>
+                      </div>
+                    </div>
+                    {{form.abono}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="saldo" class="col-8 col-form-label">Saldo</label>
+                <div class="col-12">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-dollar-sign"></i>
+                      </div>
+                    </div>
+                    {{form.saldo}}
+                  </div>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-8 col-form-label" for="sucursal">Pago</label>
+                <div class="col-12">{{form.estado_pago}}</div>
+              </div>
+              <div class="form-group row">
+                <label class="col-8 col-form-label" for="sucursal">Estado</label>
+                <div class="col-12">{{form.estado}}</div>
+              </div>
+
+              <div class="form-group row">
+                <div class="offset-6 col-8">
+                  <button type="submit" id="btnEnviar" class="btn btn-primary">Crear</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+</section>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+    // Obtener referencias a los campos
+    var totalPresupuestoField = $('#id_valor_presupuesto');
+    var totalIvaField = $('#id_total');
+    var abonoField = $('#id_abono');
+    var saldoField = $('#id_saldo');
+    var formulario = $('#miFormulario');
+
+    // Función para calcular el IVA
+    function calcularIva() {
+      var totalPresupuesto = parseFloat(totalPresupuestoField.val()) || 0;
+      var iva = totalPresupuesto * 0.19; // Calcular el 19% de IVA
+      var totalConIva = totalPresupuesto + iva;
+      totalIvaField.val(Math.round(totalConIva)); // Redondear y actualizar el campo Total + IVA
+
+      // Llamar a la función para recalcular el saldo
+      calcularSaldo();
+    }
+
+    // Función para calcular el saldo
+    function calcularSaldo() {
+      var totalIva = parseFloat(totalIvaField.val()) || 0;
+      var abono = parseFloat(abonoField.val()) || 0;
+      var saldo = totalIva - abono;
+
+      // Validar que el abono no sea mayor que el total más IVA
+      if (abono > totalIva) {
+        abonoField.val(totalIva);
+        saldo = 0;
+        alert('El abono no puede ser mayor que el total más el IVA.');
+      }
+
+      // Validar que el abono no sea negativo
+      if (abono < 0) {
+        abonoField.val(0);
+        saldo = totalIva;
+        alert('El abono no puede ser un número negativo.');
+      }
+
+      saldoField.val(Math.round(saldo)); // Redondear y actualizar el campo Saldo
+    }
+
+    // Función para validar el formulario antes de enviarlo
+    function validarFormulario() {
+      var abono = parseFloat(abonoField.val()) || 0;
+      var totalIva = parseFloat(totalIvaField.val()) || 0;
+
+      // Validar que el abono no sea mayor que el total más IVA
+      if (abono > totalIva) {
+        alert('El abono no puede ser mayor que el total más el IVA.');
+        return false; // Evitar que se envíe el formulario
+      }
+
+      // Validar que el abono no sea negativo
+      if (abono < 0) {
+        alert('El abono no puede ser un número negativo.');
+        return false; // Evitar que se envíe el formulario
+      }
+
+      return true; // El formulario puede enviarse
+    }
+
+    // Calcular el IVA inicialmente al cargar la página
+    calcularIva();
+
+    // Calcular el saldo inicialmente al cargar la página
+    calcularSaldo();
+
+    // Asociar el evento input a los campos relevantes para el cálculo del IVA
+    $('input[name="nombre"], input[name="direccion"], input[name="correo"], input[name="telefono"], input[name="valor_presupuesto"]').on('input', calcularIva);
+
+    // Asociar el evento input al campo de abono para el cálculo del saldo y la validación
+    abonoField.on('input', function () {
+      calcularSaldo();
+      // Validar el formulario cuando cambia el abono
+      validarFormulario();
+    });
+
+    // Asociar el evento submit del formulario a la validación antes de enviar
+    formulario.on('submit', function () {
+      return validarFormulario();
+    });
+  });
+
+  $(document).ready(function () {
+    $('#id_cliente').change(function () {
+      var clienteId = $(this).val();
+      if (clienteId) {
+        $.ajax({
+          url: '/obtener_cliente/' + clienteId + '/',
+          type: 'GET',
+          success: function (data) {
+            $('#id_nombre').val(data.nombre);
+            $('#id_direccion').val(data.direccion);
+            $('#id_correo').val(data.correo);
+            $('#id_telefono').val(data.telefono);
+            // Llena otros campos según sea necesario
+          },
+          error: function () {
+            // Maneja errores si es necesario
+          }
+        });
+      }
+    });
+  });
+</script>
+
+{% endblock %}
