@@ -109,7 +109,9 @@
             <td>{{g.estado_pago}}</td>
             <td>{{g.estado}}</td>
             <td><a href="{% url 'actualizar' g.id %}" class = "btn btn-info btn-sm">Editar</a>
+          {% if perms.app_cpj.delete_cliente %}
             <a href="#" onclick="eliminarGuia({{g.id}})" class = "btn btn-danger btn-sm">Eliminar</a>
+          {% endif %}
             <a href="{% url 'crear_guia_y_enviar_factura' id=g.id %}" class="btn btn-success btn-sm">Enviar Factura</a>
             <a href="{% url 'generar_factura_pdf' guia_id=g.id %}" class="btn btn-success btn-sm"><i class="fa fa-download" aria-hidden="true"></i></a>
             

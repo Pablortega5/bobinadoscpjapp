@@ -202,9 +202,9 @@
     // Función para calcular el IVA
     function calcularIva() {
       var totalPresupuesto = parseFloat(totalPresupuestoField.val()) || 0;
-      var iva = totalPresupuesto * 0.19; // Calcular el 19% de IVA
+      var iva = totalPresupuesto * 0.19; 
       var totalConIva = totalPresupuesto + iva;
-      totalIvaField.val(Math.round(totalConIva)); // Redondear y actualizar el campo Total + IVA
+      totalIvaField.val(Math.round(totalConIva)); 
 
       // Llamar a la función para recalcular el saldo
       calcularSaldo();
@@ -230,7 +230,7 @@
         alert('El abono no puede ser un número negativo.');
       }
 
-      saldoField.val(Math.round(saldo)); // Redondear y actualizar el campo Saldo
+      saldoField.val(Math.round(saldo)); 
     }
 
     // Función para validar el formulario antes de enviarlo
@@ -241,7 +241,7 @@
       // Validar que el abono no sea mayor que el total más IVA
       if (abono > totalIva) {
         alert('El abono no puede ser mayor que el total más el IVA.');
-        return false; // Evitar que se envíe el formulario
+        return false; 
       }
 
       // Validar que el abono no sea negativo

@@ -41,7 +41,7 @@ class Cliente(models.Model):
     rut = models.CharField(max_length=12, unique=True)
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(max_length=20)
-    correo = models.CharField(max_length=255)
+    correo = models.EmailField(max_length=255)
 
     def __str__(self):
         return self.nombre

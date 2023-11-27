@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% load static %} {% block body %}
+
+
+
+
+
+<br /><br /><br /><br />
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6 offset-md-3">
+            <div class="container">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-lock"></i> Cambiar Contraseña
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title"></h3>
+
+                        <form method="post" action="{% url 'cambiar_contraseña' %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit">Guardar Cambios</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

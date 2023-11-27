@@ -24,6 +24,7 @@ urlpatterns = [
     path('realizar_pago/<int:guia_id>/', views.realizar_pago, name='realizar_pago'),
     path('retorno_webpay/', views.retorno_webpay, name='retorno_webpay'),
     path('generar_factura_pdf/<int:guia_id>/', views.generar_factura_pdf, name='generar_factura_pdf'),
+    path('cambiar_contrasena/', views.cambiar_contraseña, name='cambiar_contraseña'),
   
     
     

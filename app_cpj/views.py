@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from .models import ArchivoPDF, Cliente, Comentario, Guias, Sucursal
 from .forms import ComentarioForm, CustomUserCreationForm, GuiaForm, ClienteForm
 from django.core.paginator import Paginator
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import authenticate, login
 from django.template.loader import get_template
 from weasyprint import HTML, CSS
@@ -30,8 +30,8 @@ from transbank.common.integration_api_keys import IntegrationApiKeys
 from django.core.files.base import ContentFile
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
-
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 TEMPLATES_DIRS = (
     'os.path.join(BASE_DIR,"templates")'
 )
@@ -183,7 +183,7 @@ def actualizar(request, id):
 
     return render (request, "crud_guias/actualizar.html", data)
 
-@login_required
+@permission_required('app_cpj.delete_cliente')
 def eliminar(request, id):
     guia = get_object_or_404(Guias, id=id)
     guia.delete()
@@ -226,7 +226,7 @@ def registro(request):
 
 
 
-@login_required
+@permission_required('app_cpj.add_user')
 def listar_usuarios(request):
     # Obtener la lista de usuarios ordenados por id
     usuarios = User.objects.all().order_by('id')
@@ -267,7 +267,7 @@ def listar_usuarios(request):
 
 
 
-@login_required
+@permission_required('app_cpj.add_user')
 def cambiar_grupos_permisos(request, user_id):
     user = get_object_or_404(User, id=user_id)
 
@@ -289,14 +289,14 @@ def cambiar_grupos_permisos(request, user_id):
 
     return render(request, 'your_template.html', {'user': user, 'grupos': grupos})
 
-@login_required
+@permission_required('app_cpj.add_user')
 def eliminar_usuario(request, id):
     usuario = get_object_or_404(User, id=id)
     usuario.delete()
     messages.success(request, "Eliminado correctamente")
     return redirect(to="usuarios")
 
-@login_required
+@permission_required('app_cpj.add_user')
 def editar_usuario(request, id):
     
     usuario = get_object_or_404(User, id=id)
@@ -363,12 +363,12 @@ def editar_cliente(request, id):
          if formulario.is_valid():
               formulario.save()
               messages.success(request, "Actualizado correctamente")
-              return redirect (to="listar_cliente")
+              return redirect (to="listar_clientes")
          data["form"] = formulario
 
     return render (request, "crud_clientes/actualizar_cliente.html", data)
 
-@login_required
+@permission_required('app_cpj.delete_cliente')
 def eliminar_cliente(request, id):
     usuario = get_object_or_404(Cliente, id=id)
     usuario.delete()
@@ -467,8 +467,20 @@ def home(request):
         'guia_resultado': guia_resultado,
      }   
     return render(request, 'home.html', data)
+@login_required
+def cambiar_contraseña(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            
+            update_session_auth_hash(request, user)
+            messages.success(request, '¡Contraseña cambiada con éxito!')
+            return redirect('index')  
 
-
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/cambiar_contraseña.html', {'form': form})
 
 
 

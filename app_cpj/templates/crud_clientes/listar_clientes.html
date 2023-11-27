@@ -78,7 +78,9 @@
             <td>{{c.telefono}}</td>
             <td>{{c.correo}}</td>
             <td><a href="{% url 'editar_cliente' c.id %}" class = "btn btn-info btn-sm">Editar</a>
+            {% if perms.app_cpj.delete_cliente %}
               <a href="#" onclick="eliminarCliente({{c.id}})" class = "btn btn-danger btn-sm">Eliminar</a></td></td>
+            {% endif %}
 
           </tr>
           {% endfor %}

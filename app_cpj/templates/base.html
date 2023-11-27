@@ -21,7 +21,7 @@
 
 
     <div class="preloader flex-column justify-content-center align-items-center">
-      <img class="animation__shake" src="{% static 'dist/img/Logo.png' %}"  height="150" width="150">
+      <img class="animation__shake" src="{% static 'dist/img/Logo.png' %}" height="150" width="150">
     </div>
 
 
@@ -63,7 +63,7 @@
 
 
 
-    
+
         <nav class="mt-2">
 
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -133,6 +133,7 @@
 
               </ul>
             </li>
+            {% if perms.app_cpj.add_user %}
             <li class="nav-item">
               <a href="#" class="nav-link">
                 <i class="far fa-address-card"></i>
@@ -157,14 +158,21 @@
                   </a>
                 </li>
               </ul>
+            </li>
+            {% endif %}
+            <a href="{% url 'cambiar_contraseña' %}" class="nav-link">
+              <i class="fas fa-lock"></i>
+              <p>
+                &nbsp; Cambiar contraseña
+                
 
-
-             
+              </p>
+            </a>
       </div>
 
     </aside>
 
-    
+
     <div class="content-wrapper">
 
 
